@@ -4,11 +4,13 @@ import utilStyles from '../styles/utils.module.css'
 import TradingViewWidget, { Themes } from "react-tradingview-widget";
 import { useEffect, useState } from 'react';
 
+
 export default function Trading() {
 
     const [value, setValue] = useState("BTCUSDT");
     const [exchange, setExchange] = useState("Binance");
     const [pairs, setPairs] = useState([]);
+
 
 
     const exchanges = [
@@ -23,7 +25,12 @@ export default function Trading() {
 
     useEffect(() => {
         getExchangeData('Binance');
+        const ws = new WebSocket("wss://stream.binance.com:9443/ws/ltcbtc@depth");
+        console.log(ws);
+        ws.onmessage = (event: WebSocketEventMap['message']) => console.table("event", event.data);
     }, []);
+
+
 
     var pairsArray = [];
 
