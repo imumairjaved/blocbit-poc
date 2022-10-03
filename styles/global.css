@@ -22,6 +22,50 @@ a:hover {
 }
 
 img {
-  max-width: 100%;
+  max-inline-size: 100%;
   display: block;
+}
+
+[data-reactroot]>div {
+  margin-top: 0;
+}
+
+
+.red {
+  color: red;
+}
+
+.green {
+  color: rgb(43, 207, 43);
+}
+
+main {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav>div,
+nav>ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav>ul li {
+  display: flex;
+  list-style-type: none;
+}
+
+nav>ul li a {
+  padding: 10px 25px;
+  text-decoration: none;
+  color: #eb8932 !important;
+  font-weight: 700;
 }

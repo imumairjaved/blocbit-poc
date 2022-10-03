@@ -26,25 +26,21 @@ export default function Layout({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <nav>
-        <li><Link href={`/trading`}>
-          <a>Trading</a>
-        </Link></li>
-        <li><Link href={`/exchanges`}>
-          <a>Exchanges</a>
-        </Link></li>
+        <div>
+          <span className={utilStyles.heading2Xl}>{name}</span>
+        </div>
+        <ul>
+          <li><Link href={`/trading`}>
+            <a>Trading</a>
+          </Link></li>
+          {/* <li><Link href={`/exchanges`}>
+            <a>Exchanges</a>
+          </Link></li>*/}
+        </ul>
       </nav>
       <header className={styles.header}>
         {home ? (
           <>
-            <Image
-              priority
-              src="/images/bot.jpg"
-              className={utilStyles.borderCircle}
-              height={144}
-              width={144}
-              alt={name}
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
           </>
         ) : (
           <>

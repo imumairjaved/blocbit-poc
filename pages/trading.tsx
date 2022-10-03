@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import OrderBook from "./OrderBook";
 
 export default function Trading() {
-  const [value, setValue] = useState("BTCUSDT");
+  const [value, setValue] = useState("ETHBTC");
   const [exchange, setExchange] = useState("Binance");
   const [pairs, setPairs] = useState([]);
 
@@ -53,43 +53,51 @@ export default function Trading() {
         <Head>
           <title>Trading</title>
         </Head>
-        <section className={utilStyles.headingMd}>
-          <select
-            id="exchange"
-            onChange={(e) => {
-              setExchange(e.target.value);
-              getExchangeData(e.target.value);
-            }}
-          >
-            {exchanges.map((exchange) => (
-              <option value={exchange.label}>{exchange.label}</option>
-            ))}
-          </select>
-          <select id="pairs" onChange={(e) => setValue(e.target.value)}>
-            {pairs.map((option, i) => (
-              <option key={i} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-
-          <br />
-        </section>
-        <OrderBook value={value}/>
+        <div className="row">
+          <div className="col col-md-3">
+            <OrderBook value={value} />
+          </div>
+          <div className="col col-md-9">
+            <div className="row">
+              <div className="col col md-12">
+                <select
+                  id="exchange"
+                  onChange={(e) => {
+                    setExchange(e.target.value);
+                    getExchangeData(e.target.value);
+                  }}
+                >
+                  {exchanges.map((exchange) => (
+                    <option value={exchange.label}>{exchange.label}</option>
+                  ))}
+                </select>
+                <select id="pairs" onChange={(e) => setValue(e.target.value)}>
+                  {pairs.map((option, i) => (
+                    <option key={i} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col col md-12">
+                <TradingViewWidget
+                  width={'100%'}
+                  height={700}
+                  symbol={`${exchange}:${value}`}
+                  theme={Themes.LIGHT}
+                  locale="en"
+                  // hide_top_toolbar = {false}
+                  // timezone="America/New York"
+                  hideSideToolbar={true}
+                  hide_side_toolbar={false}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </Layout>
-      <TradingViewWidget
-        width={1300}
-        height={750}
-        symbol={`${exchange}:${value}`}
-        theme={Themes.LIGHT}
-        locale="en"
-        // hide_top_toolbar = {false}
-        // timezone="America/New York"
-        hideSideToolbar={true}
-        details
-        news={["headlines"]}
-        hide_side_toolbar={false}
-      />
     </>
   );
 }
