@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const OrderBook = (props) => {
   const [asksPrice, setAsksPrice] = useState([]);
@@ -6,14 +6,13 @@ const OrderBook = (props) => {
   let asksPriceArray = [];
   let asksQuantityArray = [];
   console.log("PROP: ", props.value)
-  let url = `wss://stream.binance.com:9443/ws/${props.value.toLowerCase()}@depth10@100ms`
+  let url = `wss://stream.binance.com:9443/ws/${props.value.toLowerCase()}@depth10@1000ms`
   console.log("URL: ", url)
 
   useEffect(() => {
     const ws = new WebSocket(url);
     ws.onmessage = function (event) {
       const data = JSON.parse(event.data);
-      console.log("DATA: ", data);
       if (asksPriceArray.length >= 10) {
         asksPriceArray = [];
         asksQuantityArray = [];
@@ -39,18 +38,20 @@ const OrderBook = (props) => {
         </thead>
         <tbody>
           <tr>
-            {asksPrice.map((price, index) => (
-              <tr>
-                <td>{price}</td>
-              </tr>
-            ))}
-          </tr>
-          <tr>
-            {asksQuantity.map((quantity, index) => (
-              <tr>
-                <td>{quantity}</td>
-              </tr>
-            ))}
+            <td>
+              {asksPrice.map((price, index) => (
+                <tr>
+                  <td>{price}</td>
+                </tr>
+              ))}
+            </td>
+            <td>
+              {asksQuantity.map((quantity, index) => (
+                <tr>
+                  <td>{quantity}</td>
+                </tr>
+              ))}
+            </td>
           </tr>
         </tbody>
       </table>
