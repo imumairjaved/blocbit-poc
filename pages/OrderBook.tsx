@@ -18,47 +18,47 @@ const OrderBook = (props) => {
   let url = `wss://stream.binance.com:9443/ws/${props.value.toLowerCase()}@depth10@100ms`;
 
   useEffect(() => {
-      const ws = new WebSocket(url);
-      ws.onopen = () => {
-        ws.onmessage = function (event) {
-          const data = JSON.parse(event.data);
-          if (asksPriceArray.length >= 10 && bidsPriceArray.length >= 10) {
-            asksPriceArray = [];
-            asksQuantityArray = [];
-            asksTotalArray = [];
-            bidsPriceArray = [];
-            bidsQuantityArray = [];
-            bidsTotalArray = [];
-          } else {
-            for (let i = 0; i < 10; i++) {
-              //Getting ASKS
-              asksPriceArray.push(Number(data.asks[i][0]).toFixed(5));
-              asksQuantityArray.push(Number(data.asks[i][1]).toFixed(5));
-              asksTotalArray.push(
-                (Number(data.asks[i][0]) * Number(data.asks[i][1])).toFixed(5)
-              );
-              //Getting BIDS
-              bidsPriceArray.push(Number(data.bids[i][0]).toFixed(5));
-              bidsQuantityArray.push(Number(data.bids[i][1]).toFixed(5));
-              bidsTotalArray.push(
-                (Number(data.bids[i][0]) * Number(data.bids[i][1])).toFixed(5)
-              );
-            }
-            //Setting ASKS
-            setAsksPrice(asksPriceArray);
-            setAsksQuantity(asksQuantityArray);
-            setAsksTotal(asksTotalArray);
-
-            //Setting BIDS
-            setBidsPrice(bidsPriceArray);
-            setBidsQuantity(bidsQuantityArray);
-            setBidsTotal(bidsTotalArray);
+    const ws = new WebSocket(url);
+    ws.onopen = () => {
+      ws.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        if (asksPriceArray.length >= 10 && bidsPriceArray.length >= 10) {
+          asksPriceArray = [];
+          asksQuantityArray = [];
+          asksTotalArray = [];
+          bidsPriceArray = [];
+          bidsQuantityArray = [];
+          bidsTotalArray = [];
+        } else {
+          for (let i = 0; i < 10; i++) {
+            //Getting ASKS
+            asksPriceArray.push(Number(data.asks[i][0]).toFixed(5));
+            asksQuantityArray.push(Number(data.asks[i][1]).toFixed(5));
+            asksTotalArray.push(
+              (Number(data.asks[i][0]) * Number(data.asks[i][1])).toFixed(5)
+            );
+            //Getting BIDS
+            bidsPriceArray.push(Number(data.bids[i][0]).toFixed(5));
+            bidsQuantityArray.push(Number(data.bids[i][1]).toFixed(5));
+            bidsTotalArray.push(
+              (Number(data.bids[i][0]) * Number(data.bids[i][1])).toFixed(5)
+            );
           }
-        };
+          //Setting ASKS
+          setAsksPrice(asksPriceArray.reverse());
+          setAsksQuantity(asksQuantityArray.reverse());
+          setAsksTotal(asksTotalArray.reverse());
+
+          //Setting BIDS
+          setBidsPrice(bidsPriceArray);
+          setBidsQuantity(bidsQuantityArray);
+          setBidsTotal(bidsTotalArray);
+        }
       };
-      return () => {
-        ws.close();
-      };
+    };
+    return () => {
+      ws.close();
+    };
   }, [url]);
 
   return (

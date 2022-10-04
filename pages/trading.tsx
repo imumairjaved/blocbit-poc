@@ -4,6 +4,7 @@ import utilStyles from "../styles/utils.module.css";
 import TradingViewWidget, { Themes } from "react-tradingview-widget";
 import { useEffect, useState } from "react";
 import OrderBook from "./OrderBook";
+import TradeHistory from "./TradeHistory";
 
 export default function Trading() {
   const [value, setValue] = useState("ETHBTC");
@@ -95,6 +96,11 @@ export default function Trading() {
                 />
               </div>
             </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col col-md-12">
+            <TradeHistory value={value} />
           </div>
         </div>
       </Layout>
