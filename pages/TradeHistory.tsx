@@ -3,12 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 const TradeHistory = (props) => {
 
     const [trade, setTrade] = useState([]);
-
     let tradeArray = [];
-
-
     let url = `wss://stream.binance.com:9443/ws/${props.value.toLowerCase()}@aggTrade`;
-
 
     useEffect(() => {
         const ws = new WebSocket(url);
@@ -16,18 +12,18 @@ const TradeHistory = (props) => {
             ws.onmessage = function (event) {
                 const data = JSON.parse(event.data);
                 tradeArray.push(data);
-                if (tradeArray.length >= 10) {
-                    tradeArray = [];
-                }
-                else {
-                    setTrade(tradeArray)
+
+                if (tradeArray.length > 7) {
+                    tradeArray.shift();
+                    tradeArray.push(data);
+                    setTrade(tradeArray.reverse())
                 }
             };
         };
         return () => {
             ws.close();
         };
-    }, [url]);
+    }, [url, tradeArray]);
 
     return (
         <>
@@ -41,15 +37,14 @@ const TradeHistory = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {trade != null ?
-                        trade.map((price, index) => (
-                            <tr>
-                                <td>{price.p}</td>
-                                <td className={price.m ? "green" : "red"}>{price.m ? "SELL" : "BUY"}</td>
-                                <td>{price.q}</td>
-                                <td>{price.T}</td>
-                            </tr>
-                        )) : ''}
+                    {trade != null ? trade.map((price, index) => (
+                        <tr key={index}>
+                            <td className={price.m ? "red" : "green"}>{Number(price.p).toFixed(6)}</td>
+                            <td className={price.m ? "red" : "green"}>{price.m ? "SELL" : "BUY"}</td>
+                            <td>{Number(price.q).toFixed(5)}</td>
+                            <td>{new Date(price.T).toLocaleTimeString()}</td>
+                        </tr>
+                    )) : ''}
                 </tbody>
             </table>
         </>
