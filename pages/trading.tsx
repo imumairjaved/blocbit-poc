@@ -56,6 +56,7 @@ export default function Trading() {
         </Head>
         <div className="row">
           <div className="col col-md-3">
+            <h2>Order Books</h2>
             <OrderBook value={value} />
           </div>
           <div className="col col-md-9">
@@ -83,6 +84,7 @@ export default function Trading() {
             </div>
             <div className="row">
               <div className="col col md-12">
+                <h2>Graphs</h2>
                 <TradingViewWidget
                   width={'100%'}
                   height={700}
@@ -100,6 +102,7 @@ export default function Trading() {
         </div>
         <div className="row">
           <div className="col col-md-12">
+            <h2>Trade History</h2>
             <TradeHistory value={value} />
           </div>
         </div>
