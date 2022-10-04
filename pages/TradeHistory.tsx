@@ -8,7 +8,6 @@ const TradeHistory = (props) => {
 
 
     let url = `wss://stream.binance.com:9443/ws/${props.value.toLowerCase()}@aggTrade`;
-    //let url = `wss://stream.binance.com:9443/ws/ethbtc@aggTrade`;
 
 
     useEffect(() => {
@@ -16,17 +15,12 @@ const TradeHistory = (props) => {
         ws.onopen = () => {
             ws.onmessage = function (event) {
                 const data = JSON.parse(event.data);
-                console.log("Trade data", data)
+                tradeArray.push(data);
                 if (tradeArray.length >= 10) {
                     tradeArray = [];
-                } else {
-                    for (let i = 0; i < 10; i++) {
-                        //Getting TRADE Data
-                        tradeArray.push(data);
-                    }
-                    //Setting TRADE data
-                    setTrade(tradeArray);
-
+                }
+                else {
+                    setTrade(tradeArray)
                 }
             };
         };
@@ -47,14 +41,15 @@ const TradeHistory = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {trade.map((price, index) => (
-                        <tr>
-                            <td>{price.p}</td>
-                            <td className={price.m ? "green" : "red"}>{price.m ? "SELL" : "BUY"}</td>
-                            <td>{price.q}</td>
-                            <td>{price.T}</td>
-                        </tr>
-                    ))}
+                    {trade != null ?
+                        trade.map((price, index) => (
+                            <tr>
+                                <td>{price.p}</td>
+                                <td className={price.m ? "green" : "red"}>{price.m ? "SELL" : "BUY"}</td>
+                                <td>{price.q}</td>
+                                <td>{price.T}</td>
+                            </tr>
+                        )) : ''}
                 </tbody>
             </table>
         </>

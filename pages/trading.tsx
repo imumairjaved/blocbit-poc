@@ -61,6 +61,7 @@ export default function Trading() {
           </div>
           <div className="col col-md-9">
             <div className="row">
+              <h2>Graphs</h2>
               <div className="col col md-12">
                 <select
                   id="exchange"
@@ -84,7 +85,6 @@ export default function Trading() {
             </div>
             <div className="row">
               <div className="col col md-12">
-                <h2>Graphs</h2>
                 <TradingViewWidget
                   width={'100%'}
                   height={700}
