@@ -37,14 +37,14 @@ const TradeHistory = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {trade != null ? trade.map((price, index) => (
+                    {trade.length > 7 ? trade.map((price, index) => (
                         <tr key={index}>
                             <td className={price.m ? "red" : "green"}>{Number(price.p).toFixed(6)}</td>
                             <td className={price.m ? "red" : "green"}>{price.m ? "SELL" : "BUY"}</td>
                             <td>{Number(price.q).toFixed(5)}</td>
                             <td>{new Date(price.T).toLocaleTimeString()}</td>
                         </tr>
-                    )) : ''}
+                    )) : 'Loading ...'}
                 </tbody>
             </table>
         </>
