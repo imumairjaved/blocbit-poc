@@ -6,7 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^1.0.0",
+    "binance": "^2.1.2",
+    "binance-client": "^3.0.10",
     "bootstrap": "^5.2.2",
+    "crypto-js": "^4.1.1",
     "date-fns": "^2.11.1",
     "gray-matter": "^4.0.2",
     "next": "latest",
